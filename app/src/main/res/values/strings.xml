@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">Buscaminas</string>
+    <string name="help_button_text">Ayuda</string>
+    <string name="start_button_text">Empezar Partida</string>
+    <string name="invalid_parameters_added">Configuracion invalida</string>
+    <string name="exit_button_text">Salir</string>
+    <string name="help_instructions_text">El juego consiste en despejar todas las casillas de una parrilla que no oculten una mina.
+    Algunas casillas tienen un número, este número indica las minas que suman todas las casillas circundantes. Así, si una casilla tiene el número 3.
+    significa que de las ocho casillas que hay alrededor(si no es en una esquina o borde) hay 3 con minas y 5 sin minas.
+    Si se descubre una casilla con una mina SE PIERDE la patida. En otro caso, descubres todas las casillas sin mina, GANAS!!
+    Puedes configurar el numero de filas de la parilla, el porcentage de minas en la misma y si quieres que haya un tiempo máximo para completar el juego. </string>
+    <string name="help_title_text">Bienvenido al juego del BUSCA MINAS</string>
+    <string name="help_return_button_text">Ir al Juego</string>
+    <string name="alias_title_text">Alias identificativo</string>
+    <string name="alias_value_hint">Alias</string>
+    <string name="grid_size">Tamaño de la parrilla</string>
+    <string name="grid_size_option1">7</string>
+    <string name="grid_size_option2">6</string>
+    <string name="grid_size_option3">5</string>
+    <string name="time_controler_title_text">Control el tiempo</string>
+    <string name="mine_percentage_title_text">% minas</string>
+    <string name="mine_grid_option1">15%</string>
+    <string name="mine_grid_option2">25%</string>
+    <string name="mine_grid_option3">35</string>
+    <string name="start_game_button_text">Empezar</string>
+    <string name="time_title_text">Dia y hora</string>
+    <string name="log_title_text">Valores del Log</string>
+    <string name="mail_re_title_text">E-mail destinatario</string>
+    <string name="mail_re_button_text">Enviar e-mail</string>
+    <string name="start_new_game_result_button_text">Nueva partida</string>
+    <string name="exit_result_button_text">Salir</string>
+</resources>
