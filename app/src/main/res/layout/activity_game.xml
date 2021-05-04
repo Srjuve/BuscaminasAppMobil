@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="412dp"
+        android:layout_width="match_parent"
         android:layout_height="98dp"
         android:background="#FCFCFC"
         android:backgroundTint="#8BC34A"
@@ -34,23 +34,40 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
         app:layout_constraintVertical_bias="0.154" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="182dp"
+    <LinearLayout
+        android:id="@+id/LinearTitlesLayout"
+        android:layout_width="match_parent"
         android:layout_height="17dp"
-        android:text="TextView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+        <TextView
+            android:id="@+id/undiscovered_text"
+            android:layout_width="182dp"
+            android:layout_height="17dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    </LinearLayout>
+
+
 
     <LinearLayout
         android:id="@+id/linearLayout9"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:layout_height="56dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"></LinearLayout>
+        app:layout_constraintTop_toBottomOf="@+id/LinearTitlesLayout"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

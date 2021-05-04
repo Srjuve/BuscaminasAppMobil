@@ -17,6 +17,18 @@ public class MineSearchGame implements Serializable {
         this.userAlias=alias;
     }
 
+    public int getUndiscoveredCount(){
+        int count=0;
+        for(int i=0;i<this.layout.length;i+=1){
+            for(int j=0;j<this.layout[0].length;j+=1){
+                if(this.layout[i][j]!=-1){
+                    if(!this.discoveredLayout[i][j])
+                        count+=1;
+                }
+            }
+        }
+        return count;
+    }
     public int getGridSize(){
         return layout.length;
     }

@@ -12,9 +12,10 @@ import java.util.List;
 
 public class CustomButtonAdapter extends BaseAdapter {
     Context context;
-    List<TextView> buttons;
+    //List<TextView> buttons;
+    List<Button> buttons;
     LayoutInflater inflater;
-    public CustomButtonAdapter(Context applicationContext, List<TextView> buttons){
+    public CustomButtonAdapter(Context applicationContext, List<Button> buttons){
         this.context=applicationContext;
         this.buttons=buttons;
         inflater=(LayoutInflater.from(applicationContext));

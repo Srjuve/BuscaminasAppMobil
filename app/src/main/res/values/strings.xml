@@ -21,7 +21,7 @@
     <string name="mine_percentage_title_text">% minas</string>
     <string name="mine_grid_option1">15%</string>
     <string name="mine_grid_option2">25%</string>
-    <string name="mine_grid_option3">35</string>
+    <string name="mine_grid_option3">35%</string>
     <string name="start_game_button_text">Empezar</string>
     <string name="time_title_text">Dia y hora</string>
     <string name="log_title_text">Valores del Log</string>

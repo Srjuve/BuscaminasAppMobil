@@ -38,6 +38,8 @@ public class GameConfigActivity extends Activity implements View.OnClickListener
             Intent in = new Intent(this, GameActivity.class);
             in.putExtra("gridsize",getGridSize(gridsizeChecked));
             in.putExtra("minePercentage",getPercentage(minePercentageChecked));
+            if(timeControl.isChecked())
+                in.putExtra("timeControl",true);
             startActivity(in);
             finish();
         }
