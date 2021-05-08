@@ -36,6 +36,7 @@ public class GameConfigActivity extends Activity implements View.OnClickListener
             Toast.makeText(this,R.string.invalid_parameters_added, Toast.LENGTH_LONG).show();
         }else {
             Intent in = new Intent(this, GameActivity.class);
+            in.putExtra("alias",newAlias);
             in.putExtra("gridsize",getGridSize(gridsizeChecked));
             in.putExtra("minePercentage",getPercentage(minePercentageChecked));
             if(timeControl.isChecked())

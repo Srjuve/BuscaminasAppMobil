@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.startGameButtonID:
                 in = new Intent(this,GameConfigActivity.class);
                 startActivity(in);
+                finish();
                 break;
             case R.id.exitButtonID:
                 finish();

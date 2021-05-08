@@ -29,4 +29,6 @@
     <string name="mail_re_button_text">Enviar e-mail</string>
     <string name="start_new_game_result_button_text">Nueva partida</string>
     <string name="exit_result_button_text">Salir</string>
+    <string name="dest_mail_placeholder">ajs5@alumnes.udl.cat</string>
+    <string name="start_time">30</string>
 </resources>

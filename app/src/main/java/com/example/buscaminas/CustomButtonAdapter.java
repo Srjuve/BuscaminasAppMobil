@@ -1,5 +1,6 @@
 package com.example.buscaminas;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +13,17 @@ import java.util.List;
 
 public class CustomButtonAdapter extends BaseAdapter {
     Context context;
-    //List<TextView> buttons;
     List<Button> buttons;
     LayoutInflater inflater;
-    public CustomButtonAdapter(Context applicationContext, List<Button> buttons){
+    MineSearchGame gameInstance;
+    Object timer;
+    int maxTime;
+    public CustomButtonAdapter(Context applicationContext, List<Button> buttons,MineSearchGame gameInstance,Object timer, int maxTime){
         this.context=applicationContext;
         this.buttons=buttons;
+        this.gameInstance=gameInstance;
+        this.timer=timer;
+        this.maxTime=maxTime;
         inflater=(LayoutInflater.from(applicationContext));
     }
 
@@ -39,6 +45,8 @@ public class CustomButtonAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup){
+        Button actualButton = buttons.get(i);
+        actualButton.setOnClickListener(new GridCellOnClickListener((Activity)this.context,this.gameInstance,this,this.timer,i,this.maxTime));
         return buttons.get(i);
     }
 }

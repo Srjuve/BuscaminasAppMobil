@@ -6,15 +6,32 @@ import java.util.List;
 import java.util.Random;
 
 public class MineSearchGame implements Serializable {
-    int[][] layout;
-    boolean[][] discoveredLayout;
-    String userAlias;
+    private int[][] layout;
+    private boolean[][] discoveredLayout;
+    private String userAlias;
+    private int minePercentage;
+    private int gridSize;
+    private int numberOfMines;
 
     public MineSearchGame(int gridSize,String alias,int minePercentage){
         this.layout=new int[gridSize][gridSize];
         this.discoveredLayout=new boolean[gridSize][gridSize];
-        fillLayout(minePercentage);
+        this.gridSize=gridSize;
+        this.minePercentage=minePercentage;
+        this.numberOfMines=(gridSize*gridSize*minePercentage)/100;
         this.userAlias=alias;
+        fillLayout(minePercentage);
+    }
+
+    public int getDiscoveredCount(){
+        int count=0;
+        for(int i=0;i<this.layout.length;i+=1){
+            for(int j=0;j<this.layout[0].length;j+=1){
+                if(this.discoveredLayout[i][j])
+                    count+=1;
+            }
+        }
+        return count;
     }
 
     public int getUndiscoveredCount(){
@@ -29,14 +46,17 @@ public class MineSearchGame implements Serializable {
         }
         return count;
     }
+
     public int getGridSize(){
-        return layout.length;
+        return this.gridSize;
     }
+    public String getUserAlias(){return this.userAlias;}
+    public int getMinePercentage() {return this.minePercentage;}
+    public int getNumberOfMines() {return this.numberOfMines;}
     private void fillLayout(int minePercentage){
         //Completar :D
         int maxSize=this.layout.length*this.layout.length;
-        int numberOfMines=(maxSize*minePercentage)/100;
-        List<Integer> mines = createRandomPositions(maxSize,numberOfMines);
+        List<Integer> mines = createRandomPositions(maxSize,this.numberOfMines);
         for(int i=0;i<this.layout.length;i+=1){
             for(int j=0;j<this.layout[0].length;j+=1){
                 int position=(i*this.layout.length+j);

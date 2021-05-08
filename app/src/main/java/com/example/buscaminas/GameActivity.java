@@ -6,31 +6,34 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
-
-import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class GameActivity extends Activity implements View.OnClickListener{
+public class GameActivity extends Activity {
     MineSearchGame gameInstance;
     int numColums;
     //List<TextView> entries;
     boolean checkTime;
+    String alias;
+    int minePercentage;
     List<Button> entries;
     GridView gridv;
     CustomButtonAdapter gridAdapter;
     CountDownTimer timer;
+    Timer timerFalse;
     int time_counter;
+    int maxTime;
+    int num_mines;
+
     @Override
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -38,14 +41,17 @@ public class GameActivity extends Activity implements View.OnClickListener{
         if(savedInstanceState==null) {
             Intent data = getIntent();
             this.numColums = data.getIntExtra("gridsize", 5);
+            this.minePercentage = data.getIntExtra("minePercentage",15);
+            this.checkTime = data.getBooleanExtra("timeControl",false);
+            this.alias = data.getStringExtra("alias");
+            this.num_mines = this.numColums*this.numColums*this.minePercentage/100;
             this.gameInstance = createGameInstance(data);
-            this.checkTime=data.getBooleanExtra("timeControl",false);
-            this.time_counter=30;
+            this.time_counter=60;
+            this.maxTime=this.time_counter;
             if(this.checkTime){
                 createCountDownTimer();
             }else{
-                TextView time_view = (TextView)findViewById(R.id.time_text);
-                time_view.setText("Sin control de tiempo");
+                createSimpleTimer();
             }
             TextView undiscovered_view = (TextView)findViewById(R.id.undiscovered_text);
             undiscovered_view.setText(String.valueOf(this.gameInstance.getUndiscoveredCount())+" casillas por descubrir");
@@ -55,17 +61,43 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     }
 
+    private void createSimpleTimer(){
+        this.timerFalse =new Timer();
+        TextView time_value = findViewById(R.id.time_text);
+        time_value.setText(String.valueOf(this.time_counter));
+        this.timerFalse.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                TextView time_value = findViewById(R.id.time_text);
+                int value= Integer.parseInt(time_value.getText().toString());
+                value-=1;
+                time_value.setText(String.valueOf(value));
+            }
+        },0,1000);
+    }
+
     private void createCountDownTimer(){
-        timer=new CountDownTimer(this.time_counter*1000,1000) {
+        MineSearchGame game = this.gameInstance;
+        String minePercentage = String.valueOf(this.minePercentage)+"%";
+        int max_time = this.time_counter;
+        String num_mines = String.valueOf(this.num_mines);
+        this.timer=new CountDownTimer(this.time_counter*1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 TextView time_view = (TextView)findViewById(R.id.time_text);
-                time_view.setText(String.valueOf(time_counter)+" Secs");
+                time_view.setText(String.valueOf(time_counter));
                 time_counter-=1;
             }
 
             @Override
             public void onFinish() {
+                String alias = gameInstance.getUserAlias();
+                String timeTaken = String.valueOf(max_time-time_counter);
+                Intent data = new Intent(getBaseContext(),EndInfoActivity.class);
+                String undiscovered = String.valueOf(gameInstance.getUndiscoveredCount());
+                setDayHourData(data);
+                data.putExtra("LogData","Alias: "+alias+" Casillas: "+ minePercentage +" Minas: "+ num_mines +" Tiempo Total: "+ timeTaken+ " Has agotado el tiempo!! Te han quedado "+ undiscovered +" casillas por descubrir" );
+                startActivity(data);
                 finish();
             }
         }.start();
@@ -74,12 +106,16 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void startGridView(){
         this.gridv = findViewById(R.id.game_grid);
         this.gridv.setNumColumns(this.numColums);
-        this.gridAdapter = new CustomButtonAdapter(this, this.entries);
+        if(this.checkTime) {
+            this.gridAdapter = new CustomButtonAdapter(this, this.entries, this.gameInstance, this.timer, this.maxTime);
+        }else{
+            this.gridAdapter = new CustomButtonAdapter(this, this.entries, this.gameInstance, this.timerFalse, this.maxTime);
+        }
         this.gridv.setAdapter(gridAdapter);
     }
 
     private MineSearchGame createGameInstance(Intent data){
-        MineSearchGame searchGame = new MineSearchGame(data.getIntExtra("gridsize",5),data.getStringExtra("alias"),data.getIntExtra("minePercentage",15));
+        MineSearchGame searchGame = new MineSearchGame(this.numColums,this.alias,this.minePercentage);
         return searchGame;
     }
 
@@ -87,7 +123,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
     public void onSaveInstanceState(Bundle savedInstanceState){
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable("SavedGameState",this.gameInstance);
-        savedInstanceState.putInt("time_counter",this.time_counter);
+        TextView time = findViewById(R.id.time_text);
+        savedInstanceState.putInt("time_counter",Integer.parseInt(time.getText().toString()));
         savedInstanceState.putBoolean("check_time",this.checkTime);
     }
 
@@ -96,7 +133,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         for(int i=0;i<this.numColums;i+=1){
             for(int j=0;j<this.numColums;j+=1){
                 Button newButton = new Button(this);
-                newButton.setTag(new Integer(i*this.numColums+j));
                 if(!this.gameInstance.isDiscovered(i,j)){
                     newButton.setBackgroundResource(R.drawable.rectangle);
                 }else{
@@ -104,7 +140,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
                     newButton.setGravity(Gravity.CENTER);
                     newButton.setText(String.valueOf(this.gameInstance.getValue(i,j)));
                 }
-                newButton.setOnClickListener(this);
                 entries.add(newButton);
             }
         }
@@ -118,6 +153,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         this.time_counter=savedInstanceState.getInt("time_counter");
         if(this.checkTime){
             createCountDownTimer();
+        }else{
+            createSimpleTimer();
         }
         TextView undiscovered_view = (TextView)findViewById(R.id.undiscovered_text);
         undiscovered_view.setText(String.valueOf(this.gameInstance.getUndiscoveredCount())+" casillas por descubrir");
@@ -125,25 +162,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         startGridView();
     }
 
-    @Override
-    public void onClick(View v) {
-        int x=(Integer)v.getTag()/numColums;
-        int y=(Integer)v.getTag()%numColums;
-        Toast.makeText(this,String.valueOf(x) + ":" + String.valueOf(y),Toast.LENGTH_LONG).show();
-        int result=this.gameInstance.discoverPosition(x,y);
-        if(result!=-1 && result!=-2){
-            Button clickedButton=(Button)v;
-            clickedButton.setGravity(Gravity.CENTER);
-            clickedButton.setText(String.valueOf(result));
-            clickedButton.setBackgroundResource(R.drawable.rectangleshowed);
-            TextView undiscovered_view = (TextView)findViewById(R.id.undiscovered_text);
-            undiscovered_view.setText(String.valueOf(this.gameInstance.getUndiscoveredCount())+" casillas por descubrir");
-            this.gridAdapter.notifyDataSetChanged();
-            if(this.gameInstance.checkVictory()){
-                finish();
-            }
-        }else if(result==-1){
-            finish();
-        }
+    private void setDayHourData(Intent data){
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy HH:mm:ss");
+        data.putExtra("DayHourData",dateFormat.format(calendar.getTime()));
     }
 }
