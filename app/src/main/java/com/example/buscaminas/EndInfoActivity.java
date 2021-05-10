@@ -54,6 +54,7 @@ public class EndInfoActivity extends Activity implements View.OnClickListener {
                 break;
             case R.id.start_game_result_button:
                 in = new Intent(this,GameConfigActivity.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(in);
                 finish();
                 break;

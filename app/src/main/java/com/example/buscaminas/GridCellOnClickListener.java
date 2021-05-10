@@ -1,19 +1,16 @@
 package com.example.buscaminas;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.CountDownTimer;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Timer;
 
 public class GridCellOnClickListener implements View.OnClickListener{
@@ -48,46 +45,69 @@ public class GridCellOnClickListener implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        int x=(Integer)this.position/numColums;
-        int y=(Integer)this.position%numColums;
-        Toast.makeText(this.actualContext,String.valueOf(x) + ":" + String.valueOf(y),Toast.LENGTH_LONG).show();
+        int x=this.position/numColums;
+        int y=this.position%numColums;
         int result=this.gameInstance.discoverPosition(x,y);
         if(result!=-1 && result!=-2){
-            Button clickedButton=(Button)v;
-            clickedButton.setGravity(Gravity.CENTER);
-            clickedButton.setText(String.valueOf(result));
-            clickedButton.setBackgroundResource(R.drawable.rectangleshowed);
-            TextView undiscovered_view = (TextView)v.getRootView().findViewById(R.id.undiscovered_text);
-            undiscovered_view.setText(String.valueOf(this.gameInstance.getUndiscoveredCount())+" casillas por descubrir");
+            changeButtonState(v,result);
+            changeCellsCountState(v);
             this.gridAdapter.notifyDataSetChanged();
             if(this.gameInstance.checkVictory()){
-                if(this.timer!=null) {
-                    this.timer.cancel();
-                }else{
-                    this.timerFalse.cancel();
-                }
-                Intent data = new Intent(this.actualContext,EndInfoActivity.class);
-                setDayHourData(data);
-                TextView time_value_view = (TextView)v.getRootView().findViewById(R.id.time_text);
-                int time_counter = Integer.parseInt(time_value_view.getText().toString());
-                data.putExtra("LogData","Alias: "+this.alias+" Casillas: "+ String.valueOf(this.minePercentage)+"% Minas: "+ String.valueOf(this.num_mines) +" Tiempo Total: "+String.valueOf(this.maxTime -time_counter)+ " Has ganado!! Te han sobrado "+ String.valueOf(time_counter) +" Secs");
-                this.actualContext.startActivity(data);
-                this.actualContext.finish();
+                cancelTimer();
+                Intent data = initEndIntent();
+                wonGameExit(v,data);
+                startEndActivity(data);
             }
         }else if(result==-1){
-            if(this.timer!=null) {
-                this.timer.cancel();
-            }else{
-                this.timerFalse.cancel();
-            }
-            Intent data = new Intent(this.actualContext,EndInfoActivity.class);
-            setDayHourData(data);
-            TextView time_value_view = (TextView)v.getRootView().findViewById(R.id.time_text);
-            int time_counter = Integer.parseInt(time_value_view.getText().toString());
-            data.putExtra("LogData","Alias: "+this.alias+" Casillas: "+ String.valueOf(this.minePercentage)+"% Minas: "+ String.valueOf(this.num_mines) +" Tiempo Total: "+String.valueOf(this.maxTime - time_counter)+ " Has perdido!! Bomba en casilla "+ String.valueOf(x)+","+String.valueOf(y)+" Te han quedado "+ this.gameInstance.getUndiscoveredCount() +" casillas por descubrir");
-            this.actualContext.startActivity(data);
-            this.actualContext.finish();
+            cancelTimer();
+            Intent data = initEndIntent();
+            lostGameExit(v,data,x,y);
+            startEndActivity(data);
         }
+    }
+
+    private Intent initEndIntent(){
+        Intent data = new Intent(this.actualContext,EndInfoActivity.class);
+        data.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        setDayHourData(data);
+        return data;
+    }
+
+    private void wonGameExit(View v, Intent data){
+        Toast.makeText(this.actualContext,"GAME OVER... BIEN HECHO, HAS GANADO !!",Toast.LENGTH_LONG).show();
+        TextView time_value_view = (TextView)v.getRootView().findViewById(R.id.time_text);
+        int time_counter = Integer.parseInt(time_value_view.getText().toString());
+        data.putExtra("LogData","Alias: "+this.alias+" Casillas: "+ String.valueOf(this.minePercentage)+"% Minas: "+ String.valueOf(this.num_mines) +" Tiempo Total: "+String.valueOf(this.maxTime -time_counter)+ " Has ganado!! Te han sobrado "+ String.valueOf(time_counter) +" Secs");
+    }
+
+    private void lostGameExit(View v,Intent data,int x,int y){
+        Toast.makeText(this.actualContext,"GAME OVER... MALA SUERTE, HAS PERDIDO !!",Toast.LENGTH_LONG).show();
+        TextView time_value_view = (TextView)v.getRootView().findViewById(R.id.time_text);
+        int time_counter = Integer.parseInt(time_value_view.getText().toString());
+        data.putExtra("LogData","Alias: "+this.alias+" Casillas: "+ String.valueOf(this.minePercentage)+"% Minas: "+ String.valueOf(this.num_mines) +" Tiempo Total: "+String.valueOf(this.maxTime - time_counter)+ " Has perdido!! Bomba en casilla "+ String.valueOf(x)+","+String.valueOf(y)+" Te han quedado "+ this.gameInstance.getUndiscoveredCount() +" casillas por descubrir");
+    }
+
+    private void cancelTimer(){
+        if(this.timer!=null) {
+            this.timer.cancel();
+        }else{
+            this.timerFalse.cancel();
+        }
+    }
+
+    private void startEndActivity(Intent data){
+        this.actualContext.startActivity(data);
+        this.actualContext.finish();
+    }
+    private void changeCellsCountState(View v){
+        TextView undiscovered_view = (TextView)v.getRootView().findViewById(R.id.undiscovered_text);
+        undiscovered_view.setText(String.valueOf(this.gameInstance.getUndiscoveredCount())+" casillas por descubrir");
+    }
+    private void changeButtonState(View v,int result){
+        Button clickedButton=(Button)v;
+        clickedButton.setGravity(Gravity.CENTER);
+        clickedButton.setText(String.valueOf(result));
+        clickedButton.setBackgroundResource(R.drawable.rectangleshowed);
     }
 
     private void setDayHourData(Intent data){

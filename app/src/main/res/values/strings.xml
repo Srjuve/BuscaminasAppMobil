@@ -31,4 +31,8 @@
     <string name="exit_result_button_text">Salir</string>
     <string name="dest_mail_placeholder">ajs5@alumnes.udl.cat</string>
     <string name="start_time">30</string>
+    <string name="Main_Title">PRINCIPAL</string>
+    <string name="Help_Title">AYUDA</string>
+    <string name="Config_Title">CONFIGURACION</string>
+    <string name="Game_Title">PRUEBA</string>
 </resources>

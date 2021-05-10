@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -33,6 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.startGameButtonID:
                 in = new Intent(this,GameConfigActivity.class);
+                in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(in);
                 finish();
                 break;
@@ -40,5 +42,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 finish();
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        Toast.makeText(this,"Sortida",Toast.LENGTH_LONG).show();
     }
 }

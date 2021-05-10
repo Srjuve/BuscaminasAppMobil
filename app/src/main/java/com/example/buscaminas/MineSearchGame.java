@@ -20,18 +20,7 @@ public class MineSearchGame implements Serializable {
         this.minePercentage=minePercentage;
         this.numberOfMines=(gridSize*gridSize*minePercentage)/100;
         this.userAlias=alias;
-        fillLayout(minePercentage);
-    }
-
-    public int getDiscoveredCount(){
-        int count=0;
-        for(int i=0;i<this.layout.length;i+=1){
-            for(int j=0;j<this.layout[0].length;j+=1){
-                if(this.discoveredLayout[i][j])
-                    count+=1;
-            }
-        }
-        return count;
+        fillLayout();
     }
 
     public int getUndiscoveredCount(){
@@ -53,8 +42,7 @@ public class MineSearchGame implements Serializable {
     public String getUserAlias(){return this.userAlias;}
     public int getMinePercentage() {return this.minePercentage;}
     public int getNumberOfMines() {return this.numberOfMines;}
-    private void fillLayout(int minePercentage){
-        //Completar :D
+    private void fillLayout(){
         int maxSize=this.layout.length*this.layout.length;
         List<Integer> mines = createRandomPositions(maxSize,this.numberOfMines);
         for(int i=0;i<this.layout.length;i+=1){

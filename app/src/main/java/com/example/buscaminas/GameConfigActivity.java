@@ -36,6 +36,7 @@ public class GameConfigActivity extends Activity implements View.OnClickListener
             Toast.makeText(this,R.string.invalid_parameters_added, Toast.LENGTH_LONG).show();
         }else {
             Intent in = new Intent(this, GameActivity.class);
+            in.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             in.putExtra("alias",newAlias);
             in.putExtra("gridsize",getGridSize(gridsizeChecked));
             in.putExtra("minePercentage",getPercentage(minePercentageChecked));
@@ -50,9 +51,9 @@ public class GameConfigActivity extends Activity implements View.OnClickListener
         switch (checkedMinePercentatge){
             case R.id.mine_grid_option1:
                 return 15;
-            case R.id.grid_size_option2:
+            case R.id.mine_grid_option2:
                 return 25;
-            case R.id.grid_size_option3:
+            case R.id.mine_grid_option3:
                 return 35;
             default:
                 return 15;

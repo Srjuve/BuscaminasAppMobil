@@ -14,7 +14,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.352" />
 
     <Button
         android:id="@+id/startGameButtonID"
@@ -36,8 +37,8 @@
         app:layout_constraintTop_toBottomOf="@+id/startGameButtonID" />
 
     <LinearLayout
-        android:layout_width="412dp"
-        android:layout_height="98dp"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
         android:background="#FCFCFC"
         android:backgroundTint="#8BC34A"
         android:backgroundTintMode="src_in"
@@ -51,7 +52,6 @@
             android:layout_width="146dp"
             android:layout_height="match_parent"
             android:src="@drawable/bomb" />
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -5,10 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="412dp"
-        android:layout_height="98dp"
+        android:layout_width="match_parent"
+        android:layout_height="57dp"
         android:background="#FCFCFC"
         android:backgroundTint="#8BC34A"
         android:backgroundTintMode="src_in"
@@ -34,7 +35,7 @@
     <LinearLayout
         android:id="@+id/linearLayout10"
         android:layout_width="match_parent"
-        android:layout_height="37dp"
+        android:layout_height="5dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +44,7 @@
     <LinearLayout
         android:id="@+id/linearLayout11"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="21dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -51,7 +52,7 @@
 
         <TextView
             android:id="@+id/time_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/time_title_text" />
@@ -60,7 +61,7 @@
     <LinearLayout
         android:id="@+id/linearLayout12"
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="25dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -68,10 +69,9 @@
 
         <TextView
             android:id="@+id/time_values"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
@@ -85,8 +85,8 @@
 
         <TextView
             android:id="@+id/log_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/log_title_text" />
     </LinearLayout>
@@ -94,7 +94,7 @@
     <LinearLayout
         android:id="@+id/linearLayout14"
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -102,16 +102,15 @@
 
         <TextView
             android:id="@+id/log_values"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout15"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="25dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -119,7 +118,7 @@
 
         <TextView
             android:id="@+id/mail_title"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/mail_re_title_text" />
@@ -128,7 +127,7 @@
     <LinearLayout
         android:id="@+id/linearLayout16"
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="36dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,18 +135,20 @@
 
         <EditText
             android:id="@+id/mail_re"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="34dp"
             android:layout_weight="1"
-            android:text="@string/dest_mail_placeholder" />
+            android:text="@string/dest_mail_placeholder"
+            android:textSize="14sp" />
     </LinearLayout>
 
     <Button
         android:id="@+id/send_mail_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="112dp"
+        android:layout_height="34dp"
         android:layout_marginTop="8dp"
         android:text="@string/mail_re_button_text"
+        android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
@@ -155,21 +156,24 @@
 
     <Button
         android:id="@+id/start_game_result_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="96dp"
+        android:layout_height="31dp"
         android:text="@string/start_new_game_result_button_text"
+        android:textSize="8sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.507"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/send_mail_button" />
 
     <Button
         android:id="@+id/exit_result_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="29dp"
         android:text="@string/exit_result_button_text"
+        android:textSize="8sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/start_game_result_button"
         app:layout_constraintVertical_bias="0.0" />
