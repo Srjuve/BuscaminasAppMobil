@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:text="@string/grid_size"
             android:textColor="#000000"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="106dp"
             tools:layout_editor_absoluteY="229dp" />
@@ -34,7 +34,7 @@
     <LinearLayout
         android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
-        android:layout_height="123dp"
+        android:layout_height="60dp"
         android:background="#FCFCFC"
         android:backgroundTint="#8BC34A"
         android:backgroundTintMode="src_in"
@@ -72,7 +72,7 @@
             android:layout_height="match_parent"
             android:text="@string/alias_title_text"
             android:textColor="#000000"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold"
             tools:layout_editor_absoluteX="106dp"
             tools:layout_editor_absoluteY="229dp" />
@@ -92,17 +92,17 @@
         <EditText
             android:id="@+id/alias_edit_text"
             android:layout_width="match_parent"
-            android:layout_height="54dp"
+            android:layout_height="match_parent"
             android:ems="10"
             android:hint="@string/alias_value_hint"
             android:inputType="textPersonName"
-            android:textSize="36sp" />
+            android:textSize="24sp" />
     </LinearLayout>
 
     <RadioGroup
         android:id="@+id/grip_size_radiogroup"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -136,7 +136,7 @@
     <LinearLayout
         android:id="@+id/linearLayout6"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="42dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -149,14 +149,14 @@
             android:layout_weight="1"
             android:text="@string/time_controler_title_text"
             android:textColor="#000000"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/linearLayout8"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="70dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -173,7 +173,7 @@
     <LinearLayout
         android:id="@+id/linearLayout7"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
+        android:layout_height="42dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -186,7 +186,7 @@
             android:layout_weight="1"
             android:text="@string/mine_percentage_title_text"
             android:textColor="#000000"
-            android:textSize="36sp"
+            android:textSize="24sp"
             android:textStyle="bold" />
 
     </LinearLayout>
@@ -194,7 +194,7 @@
     <RadioGroup
         android:id="@+id/mine_percentage_radiogroup"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="70dp"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout7">

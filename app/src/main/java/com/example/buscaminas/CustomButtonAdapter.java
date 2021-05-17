@@ -6,8 +6,10 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -47,8 +49,14 @@ public class CustomButtonAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup viewGroup){
         int x=i/this.gameInstance.getGridSize();
         int y=i%this.gameInstance.getGridSize();
-        View newView = this.inflater.inflate(R.layout.button_layout,null);
-        Button actualButton = newView.findViewById(R.id.used_button);
+        Button actualButton;
+        if(view==null) {
+            actualButton = new Button(context);
+            actualButton.setLayoutParams(new ViewGroup.LayoutParams(GridView.LayoutParams.WRAP_CONTENT, 50));
+            actualButton.setPadding(8, 8, 8, 8);
+        }else{
+            actualButton = (Button)view;
+        }
         if(!this.gameInstance.isDiscovered(x,y)){
             actualButton.setBackgroundResource(R.drawable.rectangle);
         }else{
@@ -57,6 +65,7 @@ public class CustomButtonAdapter extends BaseAdapter {
             actualButton.setText(String.valueOf(this.gameInstance.getValue(x,y)));
         }
         actualButton.setOnClickListener(new GridCellOnClickListener((Activity)this.context,this.gameInstance,this,this.timer,i,this.maxTime));
+        actualButton.setId(i);
         return actualButton;
     }
 }

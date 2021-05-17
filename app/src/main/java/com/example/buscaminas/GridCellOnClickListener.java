@@ -49,7 +49,6 @@ public class GridCellOnClickListener implements View.OnClickListener{
         int y=this.position%numColums;
         int result=this.gameInstance.discoverPosition(x,y);
         if(result!=-1 && result!=-2){
-            changeButtonState(v,result);
             changeCellsCountState(v);
             this.gridAdapter.notifyDataSetChanged();
             if(this.gameInstance.checkVictory()){
@@ -102,12 +101,6 @@ public class GridCellOnClickListener implements View.OnClickListener{
     private void changeCellsCountState(View v){
         TextView undiscovered_view = (TextView)v.getRootView().findViewById(R.id.undiscovered_text);
         undiscovered_view.setText(String.valueOf(this.gameInstance.getUndiscoveredCount())+" casillas por descubrir");
-    }
-    private void changeButtonState(View v,int result){
-        Button clickedButton=(Button)v;
-        clickedButton.setGravity(Gravity.CENTER);
-        clickedButton.setText(String.valueOf(result));
-        clickedButton.setBackgroundResource(R.drawable.rectangleshowed);
     }
 
     private void setDayHourData(Intent data){

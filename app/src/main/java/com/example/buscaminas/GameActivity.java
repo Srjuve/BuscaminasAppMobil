@@ -137,7 +137,11 @@ public class GameActivity extends Activity {
         savedInstanceState.putInt("time_counter",Integer.parseInt(time.getText().toString()));
         savedInstanceState.putBoolean("check_time",this.checkTime);
         savedInstanceState.putInt("max_time",this.maxTime);
-        this.timer.cancel();
+        if(this.checkTime){
+            this.timer.cancel();
+        }else{
+            this.timerFalse.cancel();
+        }
     }
 
     @Override
