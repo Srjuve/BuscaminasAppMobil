@@ -58,13 +58,23 @@ public class CustomButtonAdapter extends BaseAdapter {
             actualButton = (Button)view;
         }
         if(!this.gameInstance.isDiscovered(x,y)){
-            actualButton.setBackgroundResource(R.drawable.rectangle);
+            if(this.gameInstance.isFlagged(x,y)){
+                actualButton.setBackgroundResource(R.drawable.rectangle_flag);
+            }else {
+                actualButton.setBackgroundResource(R.drawable.rectangle);
+            }
         }else{
-            actualButton.setBackgroundResource(R.drawable.rectangleshowed);
-            actualButton.setGravity(Gravity.CENTER);
-            actualButton.setText(String.valueOf(this.gameInstance.getValue(x,y)));
+            if(this.gameInstance.isBomb(x,y)){
+                actualButton.setBackgroundResource(R.drawable.bomb);
+                actualButton.setGravity(Gravity.CENTER);
+            }else {
+                actualButton.setBackgroundResource(R.drawable.rectangleshowed);
+                actualButton.setGravity(Gravity.CENTER);
+                actualButton.setText(String.valueOf(this.gameInstance.getValue(x, y)));
+            }
         }
         actualButton.setOnClickListener(new GridCellOnClickListener((Activity)this.context,this.gameInstance,this,this.timer,i,this.maxTime));
+        actualButton.setOnLongClickListener(new GridCellOnLongClickListener((Activity)this.context,this.gameInstance,this,i));
         actualButton.setId(i);
         return actualButton;
     }

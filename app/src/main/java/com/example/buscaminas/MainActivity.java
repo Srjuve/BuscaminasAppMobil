@@ -43,10 +43,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
         }
     }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
-        Toast.makeText(this,"Sortida",Toast.LENGTH_LONG).show();
-    }
 }

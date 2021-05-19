@@ -8,14 +8,16 @@ import java.util.Random;
 public class MineSearchGame implements Serializable {
     private int[][] layout;
     private boolean[][] discoveredLayout;
+    private boolean[][] flagged;
     private String userAlias;
     private int minePercentage;
     private int gridSize;
     private int numberOfMines;
 
     public MineSearchGame(int gridSize,String alias,int minePercentage){
-        this.layout=new int[gridSize][gridSize];
-        this.discoveredLayout=new boolean[gridSize][gridSize];
+        this.layout = new int[gridSize][gridSize];
+        this.discoveredLayout = new boolean[gridSize][gridSize];
+        this.flagged = new boolean[gridSize][gridSize];
         this.gridSize=gridSize;
         this.minePercentage=minePercentage;
         this.numberOfMines=(gridSize*gridSize*minePercentage)/100;
@@ -70,6 +72,13 @@ public class MineSearchGame implements Serializable {
         return positions;
     }
 
+    public boolean isFlagged(int x, int y){
+        return this.flagged[x][y];
+    }
+    public boolean isBomb(int x, int y){
+        return this.layout[x][y] == -1;
+    }
+
     public boolean isDiscovered(int x, int y){
         return this.discoveredLayout[x][y];
     }
@@ -112,6 +121,10 @@ public class MineSearchGame implements Serializable {
             }
         }
         return true;
+    }
+
+    public void changeFlag(int x, int y){
+        this.flagged[x][y]=!this.flagged[x][y];
     }
 
     public int discoverPosition(int x,int y){

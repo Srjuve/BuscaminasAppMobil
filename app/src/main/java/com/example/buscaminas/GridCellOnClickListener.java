@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.os.Handler;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Timer;
@@ -59,6 +59,7 @@ public class GridCellOnClickListener implements View.OnClickListener{
             }
         }else if(result==-1){
             cancelTimer();
+            this.gridAdapter.notifyDataSetChanged();
             Intent data = initEndIntent();
             lostGameExit(v,data,x,y);
             startEndActivity(data);
@@ -76,7 +77,11 @@ public class GridCellOnClickListener implements View.OnClickListener{
         Toast.makeText(this.actualContext,"GAME OVER... BIEN HECHO, HAS GANADO !!",Toast.LENGTH_LONG).show();
         TextView time_value_view = (TextView)v.getRootView().findViewById(R.id.time_text);
         int time_counter = Integer.parseInt(time_value_view.getText().toString());
-        data.putExtra("LogData","Alias: "+this.alias+" Casillas: "+ String.valueOf(this.minePercentage)+"% Minas: "+ String.valueOf(this.num_mines) +" Tiempo Total: "+String.valueOf(this.maxTime -time_counter)+ " Has ganado!! Te han sobrado "+ String.valueOf(time_counter) +" Secs");
+        if(timer!=null) {
+            data.putExtra("LogData", "Alias: " + this.alias + " Casillas: " + String.valueOf(this.minePercentage) + "% Minas: " + String.valueOf(this.num_mines) + " Tiempo Total: " + String.valueOf(this.maxTime - time_counter) + " Has ganado!! Te han sobrado " + String.valueOf(time_counter) + " Secs");
+        }else{
+            data.putExtra("LogData", "Alias: " + this.alias + " Casillas: " + String.valueOf(this.minePercentage) + "% Minas: " + String.valueOf(this.num_mines) + " Tiempo Total: " + String.valueOf(this.maxTime - time_counter) + " Has ganado!!");
+        }
     }
 
     private void lostGameExit(View v,Intent data,int x,int y){
