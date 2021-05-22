@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick (View v) {
+        //We start an activity or finish the execution depending on the button clicked(If the button should not return to the activity we ensure that this activity
+        // is erased from the back stack)
         Intent in;
         switch (v.getId()){
             case R.id.helpButtonID:

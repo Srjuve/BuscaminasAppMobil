@@ -47,6 +47,7 @@ public class CustomButtonAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup){
+        //We create the needed buttons
         int x=i/this.gameInstance.getGridSize();
         int y=i%this.gameInstance.getGridSize();
         Button actualButton;

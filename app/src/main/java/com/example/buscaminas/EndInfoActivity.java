@@ -39,6 +39,7 @@ public class EndInfoActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
+        //Depending on the clicked button we prepare the data to be sent with mail, start a new game or exit the aplication
         switch(v.getId()){
             case R.id.send_mail_button:
                 Intent in = new Intent(Intent.ACTION_SENDTO);

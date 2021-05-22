@@ -26,6 +26,7 @@ public class MineSearchGame implements Serializable {
     }
 
     public int getUndiscoveredCount(){
+        //Get undiscovered cells count(Not counting the ones filled with a mine)
         int count=0;
         for(int i=0;i<this.layout.length;i+=1){
             for(int j=0;j<this.layout[0].length;j+=1){
@@ -44,7 +45,9 @@ public class MineSearchGame implements Serializable {
     public String getUserAlias(){return this.userAlias;}
     public int getMinePercentage() {return this.minePercentage;}
     public int getNumberOfMines() {return this.numberOfMines;}
+
     private void fillLayout(){
+        //Fill the game layout
         int maxSize=this.layout.length*this.layout.length;
         List<Integer> mines = createRandomPositions(maxSize,this.numberOfMines);
         for(int i=0;i<this.layout.length;i+=1){
@@ -52,7 +55,7 @@ public class MineSearchGame implements Serializable {
                 int position=(i*this.layout.length+j);
                 if(mines.contains(new Integer(position))){
                     this.layout[i][j]=-1;
-                    updateNeighConter(i,j);
+                    updateNeighCounter(i,j);
                 }
                 this.discoveredLayout[i][j]=false;
             }
@@ -62,6 +65,7 @@ public class MineSearchGame implements Serializable {
     }
 
     private List<Integer> createRandomPositions(int maxSize, int numberOfMines){
+        //Create the random positions where the mines will be located
         List<Integer> positions = new ArrayList<>();
         Random random = new Random();
         while(positions.size()!=numberOfMines){
@@ -87,7 +91,8 @@ public class MineSearchGame implements Serializable {
         return this.layout[x][y];
     }
 
-    private void updateNeighConter(int x,int y){
+    private void updateNeighCounter(int x, int y){
+        //We update the counter of the mine counter of the neighbours cells
         if(x>0){
             if(y>0)
                 addCounterPosition(x-1,y-1);
@@ -114,6 +119,7 @@ public class MineSearchGame implements Serializable {
     }
 
     public boolean checkVictory(){
+        //Check if the victory conditions are met
         for(int i=0;i<this.discoveredLayout.length;i+=1){
             for(int j=0;j<this.discoveredLayout[0].length;j+=1){
                 if(this.layout[i][j]!=-1 && !this.discoveredLayout[i][j])
@@ -128,6 +134,7 @@ public class MineSearchGame implements Serializable {
     }
 
     public int discoverPosition(int x,int y){
+        //The given position is discovered and it's value is returned
         if(this.discoveredLayout[x][y]){
             return -2;
         }

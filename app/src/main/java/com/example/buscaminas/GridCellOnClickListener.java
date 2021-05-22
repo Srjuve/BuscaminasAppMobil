@@ -2,9 +2,12 @@ package com.example.buscaminas;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,6 +48,7 @@ public class GridCellOnClickListener implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
+        //Check if the clicked position is a bomb or not and make the necessary changes
         int x=this.position/numColums;
         int y=this.position%numColums;
         int result=this.gameInstance.discoverPosition(x,y);
@@ -60,6 +64,8 @@ public class GridCellOnClickListener implements View.OnClickListener{
         }else if(result==-1){
             cancelTimer();
             this.gridAdapter.notifyDataSetChanged();
+            MediaPlayer player = MediaPlayer.create(actualContext,R.raw.explosion);
+            player.start();
             Intent data = initEndIntent();
             lostGameExit(v,data,x,y);
             startEndActivity(data);
@@ -74,7 +80,8 @@ public class GridCellOnClickListener implements View.OnClickListener{
     }
 
     private void wonGameExit(View v, Intent data){
-        Toast.makeText(this.actualContext,"GAME OVER... BIEN HECHO, HAS GANADO !!",Toast.LENGTH_LONG).show();
+        //Prepare the data used if the user wins the game
+        createToast("GAME OVER... BIEN HECHO, HAS GANADO !!");
         TextView time_value_view = (TextView)v.getRootView().findViewById(R.id.time_text);
         int time_counter = Integer.parseInt(time_value_view.getText().toString());
         if(timer!=null) {
@@ -85,10 +92,23 @@ public class GridCellOnClickListener implements View.OnClickListener{
     }
 
     private void lostGameExit(View v,Intent data,int x,int y){
-        Toast.makeText(this.actualContext,"GAME OVER... MALA SUERTE, HAS PERDIDO !!",Toast.LENGTH_LONG).show();
+        //Prepare the data used if the user loses the game
+        createToast("GAME OVER... MALA SUERTE, HAS PERDIDO !!");
         TextView time_value_view = (TextView)v.getRootView().findViewById(R.id.time_text);
         int time_counter = Integer.parseInt(time_value_view.getText().toString());
         data.putExtra("LogData","Alias: "+this.alias+" Casillas: "+ String.valueOf(this.minePercentage)+"% Minas: "+ String.valueOf(this.num_mines) +" Tiempo Total: "+String.valueOf(this.maxTime - time_counter)+ " Has perdido!! Bomba en casilla "+ String.valueOf(x)+","+String.valueOf(y)+" Te han quedado "+ this.gameInstance.getUndiscoveredCount() +" casillas por descubrir");
+    }
+
+    private void createToast(String message){
+        LayoutInflater inflater = this.actualContext.getLayoutInflater();
+        View layout = inflater.inflate(R.layout.endtoast,(ViewGroup)this.actualContext.findViewById(R.id.toast_layout));
+        TextView text = layout.findViewById(R.id.toast_text_id);
+        text.setText(message);
+        Toast toast = new Toast(this.actualContext);
+        toast.setGravity(Gravity.CENTER,0,0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 
     private void cancelTimer(){
@@ -103,6 +123,7 @@ public class GridCellOnClickListener implements View.OnClickListener{
         this.actualContext.startActivity(data);
         this.actualContext.finish();
     }
+
     private void changeCellsCountState(View v){
         TextView undiscovered_view = (TextView)v.getRootView().findViewById(R.id.undiscovered_text);
         undiscovered_view.setText(String.valueOf(this.gameInstance.getUndiscoveredCount())+" casillas por descubrir");

@@ -24,6 +24,7 @@ public class GameConfigActivity extends Activity implements View.OnClickListener
 
     @Override
     public void onClick (View v) {
+        //Get config data and send it to the game activity
         EditText alias=findViewById(R.id.alias_edit_text);
         RadioGroup gridsizerg = findViewById(R.id.grip_size_radiogroup);
         CheckBox timeControl = findViewById(R.id.time_control_checkbox);

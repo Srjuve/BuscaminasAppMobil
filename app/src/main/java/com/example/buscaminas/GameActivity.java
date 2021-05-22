@@ -24,7 +24,6 @@ import java.util.TimerTask;
 public class GameActivity extends Activity {
     MineSearchGame gameInstance;
     int numColums;
-    //List<TextView> entries;
     boolean checkTime;
     String alias;
     int minePercentage;
@@ -39,9 +38,11 @@ public class GameActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState){
+        //Set the game activity needed data
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         if(savedInstanceState==null) {
+            //If we do not restore a game activity instance we create/get the needed data
             Intent data = getIntent();
             this.numColums = data.getIntExtra("gridsize", 5);
             this.minePercentage = data.getIntExtra("minePercentage",15);
@@ -49,7 +50,7 @@ public class GameActivity extends Activity {
             this.alias = data.getStringExtra("alias");
             this.num_mines = this.numColums*this.numColums*this.minePercentage/100;
             this.gameInstance = createGameInstance(data);
-            this.time_counter=60;
+            this.time_counter=30;
             this.maxTime=this.time_counter;
             TextView time_view = findViewById(R.id.time_text);
             TextView time_following_text = findViewById(R.id.seconds_text);
@@ -70,6 +71,7 @@ public class GameActivity extends Activity {
     }
 
     private void createSimpleTimer(){
+        //Create timer used when we do not need to control time
         this.timerFalse =new Timer();
         TextView time_value = findViewById(R.id.time_text);
         time_value.setText(String.valueOf(this.time_counter));
@@ -85,6 +87,7 @@ public class GameActivity extends Activity {
     }
 
     private void createCountDownTimer(){
+        //Create timer when we do need to control the time
         MineSearchGame game = this.gameInstance;
         String minePercentage = String.valueOf(this.minePercentage)+"%";
         int max_time = this.time_counter;
@@ -114,6 +117,7 @@ public class GameActivity extends Activity {
     }
 
     private void startGridView(){
+        //Creating the used grid view
         this.gridv = findViewById(R.id.game_grid);
         this.gridv.setNumColumns(this.numColums);
         if(this.checkTime) {
@@ -131,6 +135,7 @@ public class GameActivity extends Activity {
 
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState){
+        //We save some needed data like game state, time, etc
         super.onSaveInstanceState(savedInstanceState);
         savedInstanceState.putSerializable("SavedGameState",this.gameInstance);
         TextView time = findViewById(R.id.time_text);
@@ -146,6 +151,7 @@ public class GameActivity extends Activity {
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState){
+        //We restore the data of an already created instance
         super.onRestoreInstanceState(savedInstanceState);
         this.gameInstance=(MineSearchGame)savedInstanceState.getSerializable("SavedGameState");
         this.maxTime=savedInstanceState.getInt("max_time");

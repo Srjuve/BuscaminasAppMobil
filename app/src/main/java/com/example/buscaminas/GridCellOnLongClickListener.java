@@ -21,11 +21,12 @@ public class GridCellOnLongClickListener implements View.OnLongClickListener {
         this.position=position;
         this.gridAdapter=gridAdapter;
     }
+
     @Override
     public boolean onLongClick (View v){
+        //On Long click the position is flagged
         int x=this.position/numColums;
         int y=this.position%numColums;
-        Toast.makeText(actualContext,""+String.valueOf(x)+" "+String.valueOf(y),Toast.LENGTH_LONG).show();
         this.gameInstance.changeFlag(x,y);
         this.gridAdapter.notifyDataSetChanged();
         return true;
