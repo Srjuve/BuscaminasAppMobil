@@ -2,11 +2,14 @@ package com.example.buscaminas;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.TextView;
@@ -92,6 +95,8 @@ public class GameActivity extends Activity {
         String minePercentage = String.valueOf(this.minePercentage)+"%";
         int max_time = this.time_counter;
         String num_mines = String.valueOf(this.num_mines);
+        Context actualContext = getApplicationContext();
+        Activity context = this;
         this.timer=new CountDownTimer(this.time_counter*1000,1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -100,9 +105,22 @@ public class GameActivity extends Activity {
                 time_counter-=1;
             }
 
+            private void createToast(String message){
+                LayoutInflater inflater = context.getLayoutInflater();
+                View layout = inflater.inflate(R.layout.endtoast,(ViewGroup)context.findViewById(R.id.toast_layout));
+                TextView text = layout.findViewById(R.id.toast_text_id);
+                text.setText(message);
+                Toast toast = new Toast(context);
+                toast.setGravity(Gravity.CENTER,0,0);
+                toast.setDuration(Toast.LENGTH_LONG);
+                toast.setView(layout);
+                toast.show();
+            }
+
             @Override
             public void onFinish() {
-                Toast.makeText(getApplicationContext(),"Tiempo agotado!.Repite suerte...",Toast.LENGTH_LONG).show();
+                //Toast.makeText(getApplicationContext(),"Tiempo agotado!.Repite suerte...",Toast.LENGTH_LONG).show();
+                createToast("Tiempo agotado!.Repite suerte...");
                 String alias = gameInstance.getUserAlias();
                 String timeTaken = String.valueOf(max_time-time_counter);
                 Intent data = new Intent(getBaseContext(),EndInfoActivity.class);
